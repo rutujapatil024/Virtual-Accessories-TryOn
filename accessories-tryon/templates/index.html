@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Virtual Try-On — Try glasses, hats, and earrings on your face in real time using your webcam.">
+    <title>Accessories Virtual Try-On</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+    <!-- ── Background decoration ──────────────────────────────── -->
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <!-- ── Header ─────────────────────────────────────────────── -->
+    <header class="header" id="header">
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon">✦</span>
+                <h1>Virtual Try-On</h1>
+            </div>
+            <p class="tagline">Try accessories on your face — live from your webcam</p>
+        </div>
+    </header>
+
+    <!-- ── Main Layout ────────────────────────────────────────── -->
+    <main class="main-container" id="main-container">
+
+        <!-- Left: Webcam Feed -->
+        <section class="webcam-panel" id="webcam-panel">
+            <div class="webcam-wrapper">
+                <img id="webcam-feed"
+                     src="/video_feed"
+                     alt="Live webcam feed with accessory overlay">
+                <div class="webcam-badge">
+                    <span class="live-dot"></span> LIVE
+                </div>
+            </div>
+
+            <!-- Action Buttons Below Webcam -->
+            <div class="webcam-actions">
+                <button class="btn btn-primary" id="btn-snapshot" title="Take a snapshot">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                        <circle cx="12" cy="13" r="4"/>
+                    </svg>
+                    Snapshot
+                </button>
+                <button class="btn btn-secondary" id="btn-clear" title="Remove current accessory">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                    Clear
+                </button>
+                <button class="btn btn-accent" id="btn-face-shape" title="Analyze your face shape">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                        <line x1="9" y1="9" x2="9.01" y2="9"/>
+                        <line x1="15" y1="9" x2="15.01" y2="9"/>
+                    </svg>
+                    Face Shape
+                </button>
+            </div>
+        </section>
+
+        <!-- Right: Catalogue + Controls -->
+        <aside class="catalogue-panel" id="catalogue-panel">
+
+            <!-- Category Tabs -->
+            <div class="tabs" id="tabs">
+                <button class="tab active" data-category="glasses" id="tab-glasses">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="6" cy="12" r="4"/><circle cx="18" cy="12" r="4"/>
+                        <path d="M10 12h4"/><path d="M2 12h0"/><path d="M22 12h0"/>
+                    </svg>
+                    Glasses
+                </button>
+                <button class="tab" data-category="hats" id="tab-hats">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 18h18v2H3z"/><path d="M6 18V8a6 6 0 0 1 12 0v10"/>
+                    </svg>
+                    Hats
+                </button>
+                <button class="tab" data-category="earrings" id="tab-earrings">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="10" r="3"/><path d="M12 13v5"/><circle cx="12" cy="20" r="2"/>
+                    </svg>
+                    Earrings
+                </button>
+            </div>
+
+            <!-- Accessory Grid -->
+            <div class="accessory-grid" id="accessory-grid">
+                <!-- Populated by JavaScript -->
+                <div class="grid-loading">
+                    <div class="spinner"></div>
+                    <p>Loading accessories…</p>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="divider"></div>
+
+            <!-- Upload Section -->
+            <div class="upload-section" id="upload-section">
+                <h3 class="section-title">Upload Your Own</h3>
+                <p class="section-desc">Upload a PNG accessory to try it on</p>
+
+                <div class="upload-form">
+                    <div class="upload-category-select">
+                        <label class="radio-label">
+                            <input type="radio" name="upload-category" value="glasses" checked>
+                            <span>Glasses</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="upload-category" value="hats">
+                            <span>Hats</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="upload-category" value="earrings">
+                            <span>Earrings</span>
+                        </label>
+                    </div>
+
+                    <label class="upload-dropzone" id="upload-dropzone" for="file-input">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="17 8 12 3 7 8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                        <span>Click or drag a PNG file here</span>
+                        <input type="file" id="file-input" accept=".png" hidden>
+                    </label>
+
+                    <!-- Upload preview -->
+                    <div class="upload-preview" id="upload-preview" style="display:none;">
+                        <img id="upload-preview-img" alt="Upload preview">
+                        <button class="btn btn-small btn-primary" id="btn-apply-upload">Apply</button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- ── Snapshot Modal ─────────────────────────────────────── -->
+    <div class="modal-overlay" id="snapshot-modal" style="display:none;">
+        <div class="modal" id="snapshot-modal-content">
+            <button class="modal-close" id="modal-close">&times;</button>
+            <h2>📸 Snapshot Captured!</h2>
+            <div class="snapshot-preview">
+                <img id="snapshot-img" alt="Captured snapshot">
+            </div>
+            <div class="modal-actions">
+                <a class="btn btn-primary" id="snapshot-download" href="#" download="tryon_snapshot.png">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    Download PNG
+                </a>
+                <button class="btn btn-secondary" id="modal-close-btn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Face Shape Modal ───────────────────────────────────── -->
+    <div class="modal-overlay" id="face-shape-modal" style="display:none;">
+        <div class="modal" id="face-shape-modal-content">
+            <button class="modal-close" id="face-shape-modal-close">&times;</button>
+            <h2>🔍 Face Shape Analysis</h2>
+            <div class="face-shape-result" id="face-shape-result">
+                <div class="spinner"></div>
+                <p>Analyzing your face shape…</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── JavaScript ─────────────────────────────────────────── -->
+    <script src="/static/js/main.js"></script>
+
+</body>
+</html>
