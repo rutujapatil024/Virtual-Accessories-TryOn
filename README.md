@@ -1,10 +1,10 @@
-# 👓 Virtual Accessories Try-On
+# Virtual Accessories Try-On
 
 A real-time web application that lets you **virtually try on accessories** (glasses, hats, and earrings) using your webcam — right inside a browser.
 
 ---
 
-## 🚀 What Does This Project Do?
+## What Does This Project Do?
 
 1. Opens your webcam inside a browser.
 2. Detects your face using AI (MediaPipe).
@@ -15,7 +15,7 @@ A real-time web application that lets you **virtually try on accessories** (glas
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Virtual Try-on/
@@ -38,7 +38,7 @@ Virtual Try-on/
 
 ---
 
-## 🔑 Key Files Explained
+## Key Files Explained
 
 ### `app.py` — The Web Server
 - Built with **Flask** (a Python web framework).
@@ -120,7 +120,7 @@ User clicks Analyse  → /face_shape returns face shape + suggestions
 
 ---
 
-## ▶️ How to Run
+## How to Run
 
 ```bash
 # 1. Install dependencies
